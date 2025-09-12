@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPGS Class 12 IP Study Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: #0f0f23;
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            border: 1px solid #2a2a4a;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .header h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            color: #a0a0a0;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .header .tagline {
+            font-size: 1rem;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .nav-card {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border: 1px solid #3a5a98;
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-card:hover::before {
+            left: 100%;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-card .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .nav-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Sections */
+        .section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            padding: 40px;
+            border: 1px solid #2a2a4a;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            color: #ffffff;
+            margin-bottom: 35px;
+            font-size: 2rem;
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* Chapter Cards */
+        .chapter-grid {
+            display: grid;
+            gap: 25px;
+        }
+
+        .chapter-card {
+            background: linear-gradient(135deg, #232340 0%, #2a2a50 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #3a3a60;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .chapter-card h3 {
+            color: #ffffff;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .chapter-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            color: #1a1a1a;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(86, 171, 47, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(243, 156, 18, 0.4);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .btn-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Resource Grid */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, #232340 0%, #2a2a50 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #3a3a60;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.2);
+        }
+
+        .resource-card .emoji {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .resource-card h3 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .resource-card p {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .quiz-card {
+            background: linear-gradient(135deg, #2a2a50 0%, #232340 100%);
+            border: 1px solid #4a4a70;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .quiz-card h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .quiz-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Compiler Section */
+        .compiler-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid #2a2a4a;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .compiler-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .compiler-card {
+            background: linear-gradient(135deg, #232340 0%, #2a2a50 100%);
+            border: 1px solid #3a3a60;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .compiler-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .compiler-card h3 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .compiler-card p {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            border: 1px solid #2a2a4a;
+        }
+
+        .footer h3 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .footer p {
+            color: #a0a0a0;
+            margin: 10px 0;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 40px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .chapter-links {
+                flex-direction: column;
+            }
+            
+            .nav-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header fade-in">
+            <h1>JPGS Class 12 IP Study Portal</h1>
+            <p class="subtitle">Complete Resource Hub for Informatics Practices</p>
+            <p class="tagline">Excellence in Education • Success in Innovation</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-grid fade-in">
+            <a href="https://classroom.google.com/u/4/c/NzYzOTY5NTUzMDIy" class="nav-card" target="_blank">
+                <span class="icon">📚</span>
+                <h3>Google Classroom</h3>
+            </a>
+            <a href="#compiler" class="nav-card">
+                <span class="icon">💻</span>
+                <h3>Python IDE</h3>
+            </a>
+            <a href="#ncert" class="nav-card">
+                <span class="icon">📖</span>
+                <h3>NCERT PDFs</h3>
+            </a>
+            <a href="#quizzes" class="nav-card">
+                <span class="icon">🧠</span>
+                <h3>Interactive Quizzes</h3>
+            </a>
+            <a href="#projects" class="nav-card">
+                <span class="icon">🚀</span>
+                <h3>Projects</h3>
+            </a>
+            <a href="#exams" class="nav-card">
+                <span class="icon">📝</span>
+                <h3>Exam Prep</h3>
+            </a>
+        </nav>
+
+        <!-- Compiler Section -->
+        <section class="compiler-section fade-in" id="compiler">
+            <h2 class="section-title">🐍 Online Python Development Environment</h2>
+            <p style="color: #a0a0a0; margin-bottom: 30px; font-size: 1.1rem;">Professional Python IDEs with full library support for Pandas, Matplotlib, and more</p>
+            
+            <div class="compiler-grid">
+                <div class="compiler-card">
+                    <h3>Google Colab</h3>
+                    <p>Full-featured Jupyter environment with GPU support and pre-installed libraries</p>
+                    <a href="https://colab.research.google.com/" class="btn btn-primary" target="_blank">
+                        <span>📊</span> Launch Colab
+                    </a>
+                </div>
+                <div class="compiler-card">
+                    <h3>Quick Compiler</h3>
+                    <p>Fast, lightweight Python compiler for quick code testing and debugging</p>
+                    <a href="https://www.programiz.com/python-programming/online-compiler/" class="btn btn-info" target="_blank">
+                        <span>⚡</span> Quick Compile
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NCERT PDF Section -->
+        <section class="section fade-in" id="ncert">
+            <h2 class="section-title">📖 NCERT Official Resources</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <span class="emoji">📚</span>
+                    <h3>NCERT Textbook Collection</h3>
+                    <p>Official NCERT textbooks for Class 12 Informatics Practices with complete curriculum coverage</p>
+                    <a href="https://drive.google.com/drive/folders/1wL8SrDpdY-WZzR8H4OgqmmHxBBSTAArG?usp=drive_link" class="btn btn-primary" target="_blank">
+                        <span>📄</span> Access PDFs
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Quizzes Section -->
+        <section class="section fade-in" id="quizzes">
+            <h2 class="section-title">🧠 Interactive Quizzes & Assessments</h2>
+            
+            <div class="quiz-container">
+                <div class="quiz-card">
+                    <h4>🌐 Networking Fundamentals</h4>
+                    <div class="quiz-links">
+                        <a href="https://forms.gle/Y2G9GFjyL7PSAdmA9" class="quiz-btn" target="_blank">
+                            📡 Networking Quiz
+                        </a>
+                    </div>
+                </div>
+
+                <div class="quiz-card">
+                    <h4>🐼 Pandas Data Handling</h4>
+                    <div class="quiz-links">
+                        <a href="https://forms.gle/YYWEUmNgxq4gHL7A9" class="quiz-btn" target="_blank">
+                            📊 Pandas Quiz 1
+                        </a>
+                        <a href="https://forms.gle/52Eeob4CmcvZKCXK8" class="quiz-btn" target="_blank">
+                            📈 Pandas Quiz 2
+                        </a>
+                        <a href="https://forms.gle/aUMUzs4gPeoa2KkZ8" class="quiz-btn" target="_blank">
+                            📉 Pandas Quiz 3
+                        </a>
+                        <a href="https://forms.gle/LR8PEgQcJcTtFCNn6" class="quiz-btn" target="_blank">
+                            📋 Pandas Quiz 4
+                        </a>
+                        <a href="https://forms.gle/ECDuXy6gAjvoRNRM8" class="quiz-btn" target="_blank">
+                            🎯 Pandas Quiz 5
+                        </a>
+                    </div>
+                </div>
+
+                <div class="quiz-card">
+                    <h4>🗄️ SQL Database Operations</h4>
+                    <div class="quiz-links">
+                        <a href="https://forms.gle/qKGjJ2NKcQVqWQBcA" class="quiz-btn" target="_blank">
+                            💾 SQL Quiz 1
+                        </a>
+                        <a href="https://forms.gle/Y7VFtVtAm1oe9GuX9" class="quiz-btn" target="_blank">
+                            🔍 SQL Quiz 2
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter-wise Study Materials -->
+        <section class="section fade-in">
+            <h2 class="section-title">📚 Chapter-wise Study Materials</h2>
+            
+            <div class="chapter-grid">
+                <div class="chapter-card">
+                    <h3>Chapter 1: Querying and SQL Functions</h3>
+                    <div class="chapter-links">
+                        <a href="https://drive.google.com/drive/folders/1CM8RZWLzfF6sylxMKD80WloOPxpbfAgB?usp=sharing" class="btn btn-success" target="_blank">
+                            <span>📝</span> Practice Papers
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/1iG9vP8lAAzsfQ-6jRJSA6E7YxVrp9Erb?usp=sharing" class="btn btn-primary" target="_blank">
+                            <span>📄</span> Chapter Notes
+                        </a>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <h3>Chapter 2: Data Handling Using Pandas – I</h3>
+                    <div class="chapter-links">
+                        <a href="https://drive.google.com/drive/folders/1T-9DguPNTgJRZTNj_4y4sAzHrCoHdBw0?usp=drive_link" class="btn btn-success" target="_blank">
+                            <span>📝</span> Practice Papers
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/1OF65nVTIJK4v4p58BPlTTU1KnouqSbqh?usp=sharing" class="btn btn-primary" target="_blank">
+                            <span>📄</span> Chapter Notes
+                        </a>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <h3>Chapter 4: Plotting Data Using Matplotlib</h3>
+                    <div class="chapter-links">
+                        <a href="https://drive.google.com/drive/folders/1D06CX9LnbC-uJKhSVs4OWhpI4pUKlLi9?usp=sharing" class="btn btn-success" target="_blank">
+                            <span>📝</span> Practice Papers
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/1SHj5t1_bxrjed9c0dIGTyKTYAxP82wF6?usp=drive_link" class="btn btn-primary" target="_blank">
+                            <span>📄</span> Chapter Notes
+                        </a>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <h3>Chapter 5: Internet and Web Technologies</h3>
+                    <div class="chapter-links">
+                        <a href="https://drive.google.com/drive/folders/1x8IB195YNQA8eeOki1mfPqrhPsXjiPkf?usp=drive_link" class="btn btn-success" target="_blank">
+                            <span>📝</span> Practice Papers
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/169mLEC_D9wZOOFnHdnUYYH8ebCW7aQNc?usp=drive_link" class="btn btn-primary" target="_blank">
+                            <span>📄</span> Chapter Notes
+                        </a>
+                    </div>
+                </div>
+
+                <div class="chapter-card">
+                    <h3>Chapter 6: Societal Impacts of Computing</h3>
+                    <div class="chapter-links">
+                        <a href="https://drive.google.com/drive/folders/1p7pUdkRjQWJCbYEwifSMUiGhEYyzadfp?usp=drive_link" class="btn btn-success" target="_blank">
+                            <span>📝</span> Practice Papers
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/16jSm6Cb8xV9sPyqvngrWbvU5qm-kxKZT?usp=drive_link" class="btn btn-primary" target="_blank">
+                            <span>📄</span> Chapter Notes
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section fade-in" id="projects">
+            <h2 class="section-title">💼 Projects & Practical Implementation</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <span class="emoji">🔧</span>
+                    <h3>IP Project Source Codes</h3>
+                    <p>Complete project implementations with documentation and comprehensive guides</p>
+                    <a href="https://drive.google.com/drive/folders/1K_b7Qs5sXMxoCiCYoCDpyIHDcu6fFBgw?usp=drive_link" class="btn btn-primary" target="_blank">
+                        <span>📁</span> Source Files
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <span class="emoji">📋</span>
+                    <h3>Practical Lab Files</h3>
+                    <p>Complete practical file solutions with step-by-step implementation guides</p>
+                    <a href="https://drive.google.com/drive/folders/1o6W8JM_FQYKf5rDxjaPQ0uqLmfU-SXbC?usp=drive_link" class="btn btn-primary" target="_blank">
+                        <span>📁</span> Lab Files
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exam Preparation -->
+        <section class="section fade-in" id="exams">
+            <h2 class="section-title">📊 Comprehensive Exam Preparation</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <span class="emoji">📚</span>
+                    <h3>CBSE Previous Years (5 Years)</h3>
+                    <p>Comprehensive collection of CBSE previous year question papers with detailed solutions</p>
+                    <a href="https://drive.google.com/drive/folders/1CTs5c9Dx1NWUPuJtlXEggSJzAheNfraq?usp=drive_link" class="btn btn-success" target="_blank">
+                        <span>📝</span> Previous Year Papers
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <span class="emoji">⭐</span>
+                    <h3>KVS Special Guess Papers</h3>
+                    <p>Specially curated question papers designed by Kendriya Vidyalaya Sangathan experts</p>
+                    <a href="https://drive.google.com/drive/folders/1q_WUQ9nQ1M2EV2Qa3Yr2Uu9yPd_-YicE?usp=drive_link" class="btn btn-warning" target="_blank">
+                        <span>📝</span> KVS Papers
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <span class="emoji">🎯</span>
+                    <h3>JPGS Special Guess Papers</h3>
+                    <p>Exclusive prediction papers crafted specifically for JPGS students with targeted approach</p>
+                    <a href="https://drive.google.com/drive/folders/1lVtU1RjU2-vsfbJOGXVtlpVPeO_m_4cm?usp=drive_link" class="btn btn-info" target="_blank">
+                        <span>📝</span> JPGS Papers
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <span class="emoji">🏆</span>
+                    <h3>Strategy to Target 100</h3>
+                    <p>Complete roadmap and strategic planning guide to achieve full marks in board examinations</p>
+                    <a href="https://drive.google.com/drive/folders/1vvOInKtvMH1CZnEoAPq1JOzmnEDfluzS?usp=drive_link" class="btn btn-primary" target="_blank">
+                        <span>🎯</span> 100% Strategy
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Inspirational Quote Section -->
+        <section class="section fade-in" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+            <div style="text-align: center; padding: 20px;">
+                <h2 style="color: #ffffff; margin-bottom: 25px; font-size: 1.8rem; font-weight: 600;">💭 Forget the Past, Focus on Today</h2>
+                <blockquote style="font-size: 1.1rem; line-height: 1.8; color: #ffffff; font-style: italic; max-width: 900px; margin: 0 auto; padding: 0 20px;">
+                    "Life is all about learning, from the day we're born until our last moment. Every second teaches us something, shaping who we are. Just like we choose good food for our body, we should choose positive thoughts for our mind. Feed your mind what helps it grow strong and healthy, because, as Buddha said, 'The mind is everything. What you think, you become.' Fill your mind with what you want to be, and let it guide your future."
+                </blockquote>
+                <p style="margin-top: 20px; color: #ffffff; opacity: 0.9; font-size: 0.95rem;">— A reminder for lifelong learning and positive thinking</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer fade-in">
+            <h3>🌟 Best of Luck!</h3>
+            <p>Stay consistent, practice regularly, and success will follow you.</p>
+            <p style="color: #667eea; margin-top: 10px;">Keep Learning, Keep Growing! 💻</p>
+        </footer>
+    </div>
+
+  </body>
+</html>
