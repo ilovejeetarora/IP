@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIVE Quiz - Perfect 100 Challenge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1e3c72 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            right: 10%;
+            top: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            left: 70%;
+            top: 70%;
+            animation-delay: 4s;
+        }
+
+        .floating-shape:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            left: 20%;
+            bottom: 20%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fff, #64b5f6, #42a5f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: #b3d9ff;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header .tagline {
+            font-size: 1.1rem;
+            color: #e3f2fd;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255,255,255,0.3); }
+            to { text-shadow: 0 0 30px rgba(100,181,246,0.5), 0 0 40px rgba(66,165,245,0.3); }
+        }
+
+        .chapters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .chapter-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .chapter-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .chapter-card:hover::before {
+            left: 100%;
+        }
+
+        .chapter-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: rgba(100, 181, 246, 0.5);
+            box-shadow: 0 20px 50px rgba(100, 181, 246, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .chapter-number {
+            font-size: 1.2rem;
+            color: #64b5f6;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chapter-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+            line-height: 1.3;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            color: #b3d9ff;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .quiz-button {
+            background: linear-gradient(45deg, #42a5f5, #1976d2);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(66, 165, 245, 0.3);
+        }
+
+        .quiz-button:hover {
+            background: linear-gradient(45deg, #1976d2, #0d47a1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(66, 165, 245, 0.4);
+        }
+
+        .stats-section {
+            margin-top: 60px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #64b5f6;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #b3d9ff;
+            margin-top: 5px;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #4caf50;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .chapters-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .chapter-card {
+                padding: 30px 20px;
+            }
+            
+            .chapter-title {
+                font-size: 1.5rem;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Special styling for Chapter 2 */
+        .chapter-card.pandas {
+            border-color: rgba(255, 193, 7, 0.3);
+        }
+
+        .chapter-card.pandas:hover {
+            border-color: rgba(255, 193, 7, 0.6);
+            box-shadow: 0 20px 50px rgba(255, 193, 7, 0.2);
+        }
+
+        .chapter-card.pandas .quiz-button {
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+        }
+
+        .chapter-card.pandas .quiz-button:hover {
+            background: linear-gradient(45deg, #f57c00, #e65100);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="subtitle">
+                <span class="live-indicator"></span>LIVE Quiz to crack Perfect 100
+            </div>
+            <h1>Master in IP</h1>
+            <div class="tagline">Challenge yourself • Learn efficiently • Achieve excellence</div>
+        </div>
+
+        <div class="chapters-grid">
+            <div class="chapter-card" onclick="navigateToQuiz('chapter1-sql.html')">
+                <div class="chapter-number">Chapter 1</div>
+                <h3 class="chapter-title">Querying and SQL Functions</h3>
+                <p class="chapter-description">
+                    Master database queries, advanced SQL functions, joins, subqueries, and data manipulation techniques for efficient database operations.
+                </p>
+                <button class="quiz-button">Start SQL Quiz</button>
+            </div>
+
+            <div class="chapter-card pandas" onclick="navigateToQuiz('Main.html')">
+                <div class="chapter-number">Chapter 2</div>
+                <h3 class="chapter-title">Data Handling Using Pandas – I</h3>
+                <p class="chapter-description">
+                    Explore Python's most powerful data manipulation library. Learn DataFrames, data cleaning, indexing, and essential pandas operations.
+                </p>
+                <button class="quiz-button">Start Pandas Quiz</button>
+            </div>
+
+            <div class="chapter-card" onclick="navigateToQuiz('chapter4-matplotlib.html')">
+                <div class="chapter-number">Chapter 4</div>
+                <h3 class="chapter-title">Plotting Data Using Matplotlib</h3>
+                <p class="chapter-description">
+                    Create stunning data visualizations with Python. Learn plotting techniques, customization, and advanced chart types for data analysis.
+                </p>
+                <button class="quiz-button">Start Matplotlib Quiz</button>
+            </div>
+
+            <div class="chapter-card" onclick="navigateToQuiz('chapter5-web-tech.html')">
+                <div class="chapter-number">Chapter 5</div>
+                <h3 class="chapter-title">Internet and Web Technologies</h3>
+                <p class="chapter-description">
+                    Understand web protocols, HTML, CSS, JavaScript, web servers, and modern web development technologies and frameworks.
+                </p>
+                <button class="quiz-button">Start Web Tech Quiz</button>
+            </div>
+
+            <div class="chapter-card" onclick="navigateToQuiz('chapter6-societal-impacts.html')">
+                <div class="chapter-number">Chapter 6</div>
+                <h3 class="chapter-title">Societal Impacts of Computing</h3>
+                <p class="chapter-description">
+                    Explore computing's influence on society, ethics in technology, digital divide, privacy concerns, and responsible computing practices.
+                </p>
+                <button class="quiz-button">Start Ethics Quiz</button>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <h2 style="margin-bottom: 10px; font-size: 2rem;">🔥 Live Statistics</h2>
+            <p style="color: #b3d9ff; margin-bottom: 30px;">Real-time quiz performance across all chapters</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">2,847</span>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">156</span>
+                    <div class="stat-label">Perfect Scores Today</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">78%</span>
+                    <div class="stat-label">Average Score</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5</span>
+                    <div class="stat-label">Chapters Available</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function navigateToQuiz(page) {
+            // Add a smooth transition effect before navigation
+            document.body.style.opacity = '0.7';
+            document.body.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                window.location.href = page;
+            }, 200);
+        }
+
+        // Add hover sound effect simulation (visual feedback)
+        document.querySelectorAll('.chapter-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.05)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                if (!this.matches(':hover')) {
+                    this.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        });
+
+        // Add click animation
+        document.querySelectorAll('.chapter-card').forEach(card => {
+            card.addEventListener('mousedown', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseup', function() {
+                this.style.transform = 'translateY(-15px) scale(1.05)';
+            });
+        });
+
+        // Animate stats on scroll
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const finalNumber = stat.textContent;
+                let current = 0;
+                const increment = parseInt(finalNumber.replace(/[^\d]/g, '')) / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= parseInt(finalNumber.replace(/[^\d]/g, ''))) {
+                        stat.textContent = finalNumber;
+                        clearInterval(timer);
+                    } else {
+                        if (finalNumber.includes('%')) {
+                            stat.textContent = Math.floor(current) + '%';
+                        } else {
+                            stat.textContent = Math.floor(current).toLocaleString();
+                        }
+                    }
+                }, 50);
+            });
+        }
+
+        // Trigger animation when stats section is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const statsSection = document.querySelector('.stats-section');
+            observer.observe(statsSection);
+        });
+    </script>
+</body>
+</html>

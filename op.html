@@ -24,6 +24,88 @@
             margin: 0 auto;
             padding: 20px;
         }
+ /* LIVE Quiz Marquee */
+        .live-quiz-marquee {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7, #dda0dd);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            padding: 15px 0;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 3px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .live-quiz-marquee:hover {
+            background-size: 600% 600%;
+            animation-duration: 1.5s;
+            transform: scale(1.02);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .marquee-content {
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: scroll 15s linear infinite;
+            padding-left: 100%;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            background: #ff0000;
+            border-radius: 50%;
+            margin-right: 15px;
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        @keyframes pulse {
+            0% { 
+                transform: scale(1); 
+                box-shadow: 0 0 10px #ff0000;
+            }
+            50% { 
+                transform: scale(1.2); 
+                box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000;
+            }
+            100% { 
+                transform: scale(1); 
+                box-shadow: 0 0 10px #ff0000;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+
 
         /* Header */
         .header {
@@ -456,6 +538,20 @@
     </style>
 </head>
 <body>
+  <!-- LIVE Quiz Marquee -->
+    <div class="live-quiz-marquee" onclick="window.location.href='four chappage.html'">
+        <div class="marquee-content">
+            <div class="marquee-text">
+                <span class="live-indicator"></span>
+                🚀 LIVE Quiz Challenge • Test Your Knowledge • Crack Perfect 100 • Join Now! • 
+                <span class="live-indicator"></span>
+                🎯 Interactive Learning • Real-time Results • Master IP • 
+                <span class="live-indicator"></span>
+                💯 Achievement Unlocked • Start Your Journey • Excel in Exams •
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <header class="header fade-in">
